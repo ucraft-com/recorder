@@ -1,0 +1,41 @@
+{
+    "name": "ucraft-com/recorder",
+    "description": "The Recorder component helps application send records to the Kafka topics for activity tracking.",
+    "type": "library",
+    "license": "MIT",
+    "autoload": {
+        "psr-4": {
+            "Uc\\Recorder\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Uc\\Recorder\\Tests\\": "tests/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Tigran Mesropyan",
+            "email": "tiko@ucraft.com"
+        }
+    ],
+    "minimum-stability": "dev",
+    "repositories": [
+        {
+            "type": "vcs",
+            "url": "git@github.com:ucraft-com/kafka-producer.git"
+        }
+    ],
+    "require-dev": {
+        "orchestra/testbench": "^6.0",
+        "ucraft-com/kafka-producer": "^1.0",
+        "phpunit/phpunit": "^9.5.10"
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Uc\\Recorder\\RecorderServiceProvider"
+            ]
+        }
+    }
+}
