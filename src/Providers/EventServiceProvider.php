@@ -10,6 +10,9 @@ use Uc\Recorder\Listeners\ProduceRecordableListener;
 
 class EventServiceProvider extends ServiceProvider
 {
+    /**
+     * @var array The event handler mappings for the application.
+     */
     protected $listen = [
         RecordableActionHappenedEvent::class => [
             ProduceRecordableListener::class,

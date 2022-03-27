@@ -4,11 +4,20 @@ declare(strict_types = 1);
 
 namespace Uc\Recorder\Activity;
 
-use JetBrains\PhpStorm\ArrayShape;
 use JsonSerializable;
 
+/**
+ * Value Object for representing Geographical data.
+ */
 final class GeographicInfo implements JsonSerializable
 {
+    /**
+     * Initialize properties.
+     *
+     * @param string $ip      IP address.
+     * @param string $city    City name.
+     * @param string $country Country name.
+     */
     public function __construct(
         protected string $ip,
         protected string $city,

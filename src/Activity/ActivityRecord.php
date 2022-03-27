@@ -8,6 +8,9 @@ use Uc\Recorder\Record;
 
 use function config;
 
+/**
+ * Record for representing runtime activities.
+ */
 class ActivityRecord extends Record
 {
     public function __construct(array $document)

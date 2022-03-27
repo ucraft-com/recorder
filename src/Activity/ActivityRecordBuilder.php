@@ -3,34 +3,50 @@
 namespace Uc\Recorder\Activity;
 
 use DateTimeImmutable;
+use ReflectionClass;
 
+/**
+ * Builder class for creating ActivityRecord objects.
+ *
+ * @see \Uc\Recorder\Activity\ActivityRecord
+ */
 class ActivityRecordBuilder
 {
+    /**
+     * @var string Action of the activity.
+     */
     protected string $action;
 
+    /**
+     * @var string Description of the Activity.
+     */
     protected string $description;
 
+    /**
+     * @var \DateTimeImmutable Datetime when the activity happened.
+     */
     protected DateTimeImmutable $date;
 
+    /**
+     * @var int Identifier of the user who generates the activity.
+     */
     protected int $userId;
 
+    /**
+     * @var \Uc\Recorder\Activity\GeographicInfo Geographical data of the activity generator.
+     */
     protected GeographicInfo $geographicInfo;
 
+    /**
+     * @var \Uc\Recorder\Activity\UserAgent Browser and Operating System related information of the activity generator.
+     */
     protected UserAgent $userAgent;
 
-    /**
-     * @return string
-     */
     public function getAction() : string
     {
         return $this->action;
     }
 
-    /**
-     * @param string $action
-     *
-     * @return ActivityRecordBuilder
-     */
     public function setAction(string $action) : ActivityRecordBuilder
     {
         $this->action = $action;
@@ -38,19 +54,11 @@ class ActivityRecordBuilder
         return $this;
     }
 
-    /**
-     * @return string
-     */
     public function getDescription() : string
     {
         return $this->description;
     }
 
-    /**
-     * @param string $description
-     *
-     * @return ActivityRecordBuilder
-     */
     public function setDescription(string $description) : ActivityRecordBuilder
     {
         $this->description = $description;
@@ -58,19 +66,11 @@ class ActivityRecordBuilder
         return $this;
     }
 
-    /**
-     * @return \DateTimeImmutable
-     */
     public function getDate() : DateTimeImmutable
     {
         return $this->date;
     }
 
-    /**
-     * @param \DateTimeImmutable $date
-     *
-     * @return ActivityRecordBuilder
-     */
     public function setDate(DateTimeImmutable $date) : ActivityRecordBuilder
     {
         $this->date = $date;
@@ -78,19 +78,11 @@ class ActivityRecordBuilder
         return $this;
     }
 
-    /**
-     * @return int
-     */
     public function getUserId() : int
     {
         return $this->userId;
     }
 
-    /**
-     * @param int $userId
-     *
-     * @return ActivityRecordBuilder
-     */
     public function setUserId(int $userId) : ActivityRecordBuilder
     {
         $this->userId = $userId;
@@ -98,19 +90,11 @@ class ActivityRecordBuilder
         return $this;
     }
 
-    /**
-     * @return \Uc\Recorder\Activity\GeographicInfo
-     */
     public function getGeographicInfo() : GeographicInfo
     {
         return $this->geographicInfo;
     }
 
-    /**
-     * @param \Uc\Recorder\Activity\GeographicInfo $geographicInfo
-     *
-     * @return ActivityRecordBuilder
-     */
     public function setGeographicInfo(GeographicInfo $geographicInfo) : ActivityRecordBuilder
     {
         $this->geographicInfo = $geographicInfo;
@@ -118,19 +102,11 @@ class ActivityRecordBuilder
         return $this;
     }
 
-    /**
-     * @return \Uc\Recorder\Activity\UserAgent
-     */
     public function getUserAgent() : UserAgent
     {
         return $this->userAgent;
     }
 
-    /**
-     * @param \Uc\Recorder\Activity\UserAgent $userAgent
-     *
-     * @return ActivityRecordBuilder
-     */
     public function setUserAgent(UserAgent $userAgent) : ActivityRecordBuilder
     {
         $this->userAgent = $userAgent;
@@ -138,32 +114,20 @@ class ActivityRecordBuilder
         return $this;
     }
 
+    /**
+     * Create instance of ActivityRecord based on the current configuration.
+     *
+     * @return \Uc\Recorder\Activity\ActivityRecord
+     */
     public function getActivityRecord() : ActivityRecord
     {
+        $reflection = new ReflectionClass($this);
         $document = [];
 
-        if (isset($this->action)) {
-            $document['action'] = $this->getAction();
-        }
-
-        if (isset($this->description)) {
-            $document['description'] = $this->getDescription();
-        }
-
-        if (isset($this->date)) {
-            $document['date'] = $this->getDate();
-        }
-
-        if (isset($this->userId)) {
-            $document['userId'] = $this->getUserId();
-        }
-
-        if (isset($this->geographicInfo)) {
-            $document['geographicInfo'] = $this->getGeographicInfo();
-        }
-
-        if (isset($this->userAgent)) {
-            $document['userAgent'] = $this->getUserAgent();
+        foreach ($reflection->getProperties() as $property) {
+            if ($property->isInitialized($this)) {
+                $document[$property->getName()] = $property->getValue($this);
+            }
         }
 
         return new ActivityRecord($document);

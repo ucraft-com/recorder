@@ -26,6 +26,9 @@
             "url": "git@github.com:ucraft-com/kafka-producer.git"
         }
     ],
+    "require": {
+        "ucraft-com/kafka-producer": "^1.0.0"
+    },
     "require-dev": {
         "orchestra/testbench": "^6.0",
         "phpunit/phpunit": "^9.5.10"
@@ -36,8 +39,5 @@
                 "Uc\\Recorder\\RecorderServiceProvider"
             ]
         }
-    },
-    "require": {
-        "ucraft-com/kafka-producer": "^1.0.0"
     }
 }

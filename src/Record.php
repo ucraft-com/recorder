@@ -6,13 +6,20 @@ namespace Uc\Recorder;
 
 use JsonSerializable;
 
+/**
+ * Value object for representing some action that has been already happened and should be persisted somehow.
+ */
 class Record implements JsonSerializable
 {
     /**
-     * @param string              $index
-     * @param array               $document
-     * @param \Uc\Recorder\Action $action
-     * @param array               $params
+     * Initialize properties.
+     *
+     * @param string              $index    Name of the Elasticsearch index where records should be accumulated.
+     * @param array               $document Document that should contain the main information and stored in the
+     *                                      Elasticsearch.
+     * @param \Uc\Recorder\Action $action   Action that should be applied to the document through the Elasticsearch.
+     * @param array               $params   In some cases actions can hold parameters. The parameters should be passed
+     *                                      here.
      */
     public function __construct(
         protected string $index,
@@ -23,33 +30,21 @@ class Record implements JsonSerializable
     {
     }
 
-    /**
-     * @return string
-     */
     public function getIndex() : string
     {
         return $this->index;
     }
 
-    /**
-     * @return array
-     */
     public function getDocument() : array
     {
         return $this->document;
     }
 
-    /**
-     * @return \Uc\Recorder\Action
-     */
     public function getAction() : Action
     {
         return $this->action;
     }
 
-    /**
-     * @return array
-     */
     public function getParams() : array
     {
         return $this->params;
