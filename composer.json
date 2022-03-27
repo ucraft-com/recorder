@@ -27,6 +27,7 @@
         }
     ],
     "require": {
+        "php": ">=8.1",
         "ucraft-com/kafka-producer": "^1.0.0"
     },
     "require-dev": {
