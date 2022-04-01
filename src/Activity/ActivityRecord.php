@@ -13,8 +13,8 @@ use function config;
  */
 class ActivityRecord extends Record
 {
-    public function __construct(array $document)
+    public function __construct(string $project, array $document)
     {
-        parent::__construct(config('recorder.activity_index'), $document);
+        parent::__construct(config('recorder.activity_index'), $project, $document);
     }
 }

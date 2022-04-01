@@ -4,6 +4,7 @@ namespace Uc\Recorder\Activity;
 
 use DateTimeImmutable;
 use ReflectionClass;
+use RuntimeException;
 
 /**
  * Builder class for creating ActivityRecord objects.
@@ -13,34 +14,57 @@ use ReflectionClass;
 class ActivityRecordBuilder
 {
     /**
+     * @var string Name of the project where activity happened.
+     */
+    protected string $project;
+
+    /**
      * @var string Action of the activity.
      */
+    #[DocumentField]
     protected string $action;
 
     /**
      * @var string Description of the Activity.
      */
+    #[DocumentField]
     protected string $description;
 
     /**
      * @var \DateTimeImmutable Datetime when the activity happened.
      */
+    #[DocumentField]
     protected DateTimeImmutable $date;
 
     /**
      * @var int Identifier of the user who generates the activity.
      */
+    #[DocumentField]
     protected int $userId;
 
     /**
      * @var \Uc\Recorder\Activity\GeographicInfo Geographical data of the activity generator.
      */
+    #[DocumentField]
     protected GeographicInfo $geographicInfo;
 
     /**
      * @var \Uc\Recorder\Activity\UserAgent Browser and Operating System related information of the activity generator.
      */
+    #[DocumentField]
     protected UserAgent $userAgent;
+
+    public function getProject() : string
+    {
+        return $this->project;
+    }
+
+    public function setProject(string $project) : ActivityRecordBuilder
+    {
+        $this->project = $project;
+
+        return $this;
+    }
 
     public function getAction() : string
     {
@@ -121,15 +145,21 @@ class ActivityRecordBuilder
      */
     public function getActivityRecord() : ActivityRecord
     {
+        if (!isset($this->project)) {
+            throw new RuntimeException('Can not create Activity record without project name.');
+        }
+
         $reflection = new ReflectionClass($this);
         $document = [];
 
         foreach ($reflection->getProperties() as $property) {
-            if ($property->isInitialized($this)) {
+            $attributes = $property->getAttributes(DocumentField::class);
+
+            if (!empty($attributes) && $property->isInitialized($this)) {
                 $document[$property->getName()] = $property->getValue($this);
             }
         }
 
-        return new ActivityRecord($document);
+        return new ActivityRecord($this->getProject(), $document);
     }
 }

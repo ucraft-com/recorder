@@ -21,6 +21,7 @@ class ActivityRecordBuilderTest extends TestCase
         $date = new DateTimeImmutable();
 
         $record = $builder
+            ->setProject('website')
             ->setAction('Page created')
             ->setDescription('New page has been created.')
             ->setDate($date)
@@ -30,6 +31,7 @@ class ActivityRecordBuilderTest extends TestCase
             ->getActivityRecord();
 
         $this->assertInstanceOf(ActivityRecord::class, $record);
+        $this->assertEquals('website', $record->getProject());
         $this->assertEquals(
             [
                 'action'         => 'Page created',
