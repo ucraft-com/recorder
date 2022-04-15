@@ -157,9 +157,10 @@ class ActivityRecordBuilder
 
         foreach ($reflection->getProperties() as $property) {
             $attributes = $property->getAttributes(DocumentField::class);
+            $propertyName = $property->getName();
 
-            if (!empty($attributes) && $property->isInitialized($this)) {
-                $document[$property->getName()] = $property->getValue($this);
+            if (!empty($attributes) && isset($this->$propertyName)) {
+                $document[$propertyName] = $this->$propertyName;
             }
         }
 
