@@ -5,6 +5,7 @@ declare(strict_types = 1);
 namespace Uc\Recorder\Tests\Unit;
 
 use DateTimeImmutable;
+use Symfony\Component\Uid\Uuid;
 use Uc\Recorder\Activity\ActivityRecord;
 use Uc\Recorder\Activity\ActivityRecordBuilder;
 use Uc\Recorder\Activity\GeographicInfo;
@@ -32,17 +33,16 @@ class ActivityRecordBuilderTest extends TestCase
 
         $this->assertInstanceOf(ActivityRecord::class, $record);
         $this->assertEquals('website', $record->getProject());
-        $this->assertEquals(
-            [
-                'action'         => 'Page created',
-                'description'    => 'New page has been created.',
-                'date'           => $date,
-                'userId'         => 1,
-                'geographicInfo' => $geographicInfo,
-                'userAgent'      => $userAgent
-            ],
-            $record->getDocument()
-        );
+
+        $document = $record->getDocument();
+
+        $this->assertEquals('Page created', $document['action']);
+        $this->assertEquals('New page has been created.', $document['description']);
+        $this->assertEquals($date, $document['date']);
+        $this->assertEquals(1, $document['userId']);
+        $this->assertEquals($geographicInfo, $document['geographicInfo']);
+        $this->assertEquals($userAgent, $document['userAgent']);
+        $this->assertInstanceOf(Uuid::class, $document['id']);
     }
 
     protected function createBuilder() : ActivityRecordBuilder

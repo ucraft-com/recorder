@@ -5,6 +5,7 @@ namespace Uc\Recorder\Activity;
 use DateTimeImmutable;
 use ReflectionClass;
 use RuntimeException;
+use Symfony\Component\Uid\Uuid;
 
 /**
  * Builder class for creating ActivityRecord objects.
@@ -150,7 +151,9 @@ class ActivityRecordBuilder
         }
 
         $reflection = new ReflectionClass($this);
-        $document = [];
+        $document = [
+            'id' => Uuid::v4(),
+        ];
 
         foreach ($reflection->getProperties() as $property) {
             $attributes = $property->getAttributes(DocumentField::class);
