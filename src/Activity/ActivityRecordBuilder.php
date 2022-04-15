@@ -15,11 +15,6 @@ use Symfony\Component\Uid\Uuid;
 class ActivityRecordBuilder
 {
     /**
-     * @var string Name of the project where activity happened.
-     */
-    protected string $project;
-
-    /**
      * @var string Action of the activity.
      */
     #[DocumentField]
@@ -44,6 +39,12 @@ class ActivityRecordBuilder
     protected int $userId;
 
     /**
+     * @var int Identifier of the project where the record was created.
+     */
+    #[DocumentField]
+    protected int $projectId;
+
+    /**
      * @var \Uc\Recorder\Activity\GeographicInfo Geographical data of the activity generator.
      */
     #[DocumentField]
@@ -54,18 +55,6 @@ class ActivityRecordBuilder
      */
     #[DocumentField]
     protected UserAgent $userAgent;
-
-    public function getProject() : string
-    {
-        return $this->project;
-    }
-
-    public function setProject(string $project) : ActivityRecordBuilder
-    {
-        $this->project = $project;
-
-        return $this;
-    }
 
     public function getAction() : string
     {
@@ -115,6 +104,18 @@ class ActivityRecordBuilder
         return $this;
     }
 
+    public function getProjectId() : int
+    {
+        return $this->projectId;
+    }
+
+    public function setProjectId(int $projectId) : ActivityRecordBuilder
+    {
+        $this->projectId = $projectId;
+
+        return $this;
+    }
+
     public function getGeographicInfo() : GeographicInfo
     {
         return $this->geographicInfo;
@@ -146,10 +147,6 @@ class ActivityRecordBuilder
      */
     public function getActivityRecord() : ActivityRecord
     {
-        if (!isset($this->project)) {
-            throw new RuntimeException('Can not create Activity record without project name.');
-        }
-
         $reflection = new ReflectionClass($this);
         $document = [
             'id' => Uuid::v4(),
@@ -164,6 +161,6 @@ class ActivityRecordBuilder
             }
         }
 
-        return new ActivityRecord($this->getProject(), $document);
+        return new ActivityRecord($document);
     }
 }

@@ -22,17 +22,16 @@ class ActivityRecordBuilderTest extends TestCase
         $date = new DateTimeImmutable();
 
         $record = $builder
-            ->setProject('website')
             ->setAction('Page created')
             ->setDescription('New page has been created.')
             ->setDate($date)
             ->setUserId(1)
+            ->setProjectId(2)
             ->setGeographicInfo($geographicInfo)
             ->setUserAgent($userAgent)
             ->getActivityRecord();
 
         $this->assertInstanceOf(ActivityRecord::class, $record);
-        $this->assertEquals('website', $record->getProject());
 
         $document = $record->getDocument();
 
@@ -40,6 +39,7 @@ class ActivityRecordBuilderTest extends TestCase
         $this->assertEquals('New page has been created.', $document['description']);
         $this->assertEquals($date, $document['date']);
         $this->assertEquals(1, $document['userId']);
+        $this->assertEquals(2, $document['projectId']);
         $this->assertEquals($geographicInfo, $document['geographicInfo']);
         $this->assertEquals($userAgent, $document['userAgent']);
         $this->assertInstanceOf(Uuid::class, $document['id']);

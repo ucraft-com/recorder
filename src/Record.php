@@ -15,7 +15,6 @@ class Record implements JsonSerializable
      * Initialize properties.
      *
      * @param string $index                 Name of the Elasticsearch index where records should be accumulated.
-     * @param string $project               Name of the project where the record was created.
      * @param array  $document              Document that should contain the main information and stored in the
      *                                      Elasticsearch.
      * @param string $action                Action that should be applied to the document through the Elasticsearch.
@@ -24,7 +23,6 @@ class Record implements JsonSerializable
      */
     public function __construct(
         protected string $index,
-        protected string $project,
         protected array  $document,
         protected string $action = Action::CREATE,
         protected array  $params = [],
@@ -36,11 +34,6 @@ class Record implements JsonSerializable
     public function getIndex() : string
     {
         return $this->index;
-    }
-
-    public function getProject() : string
-    {
-        return $this->project;
     }
 
     public function getDocument() : array
@@ -70,7 +63,6 @@ class Record implements JsonSerializable
     {
         return [
             'index'    => $this->getIndex(),
-            'project'  => $this->getProject(),
             'document' => $this->getDocument(),
             'action'   => $this->getAction(),
             'params'   => $this->getParams(),
