@@ -19,12 +19,12 @@ class ActivityRecordBuilderTest extends TestCase
         $builder = $this->createBuilder();
         $geographicInfo = $this->createGeographicInfo();
         $userAgent = $this->createUserAgent();
-        $date = new DateTimeImmutable();
+        $dateTime = new DateTimeImmutable();
 
         $record = $builder
             ->setAction('Page created')
             ->setDescription('New page has been created.')
-            ->setDate($date)
+            ->setDateTime($dateTime)
             ->setUserId(1)
             ->setProjectId(2)
             ->setGeographicInfo($geographicInfo)
@@ -37,7 +37,7 @@ class ActivityRecordBuilderTest extends TestCase
 
         $this->assertEquals('Page created', $document['action']);
         $this->assertEquals('New page has been created.', $document['description']);
-        $this->assertEquals($date, $document['date']);
+        $this->assertEquals($dateTime, $document['dateTime']);
         $this->assertEquals(1, $document['userId']);
         $this->assertEquals(2, $document['projectId']);
         $this->assertEquals($geographicInfo, $document['geographicInfo']);

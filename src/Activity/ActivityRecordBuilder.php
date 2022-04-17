@@ -1,10 +1,11 @@
 <?php
 
+declare(strict_types = 1);
+
 namespace Uc\Recorder\Activity;
 
 use DateTimeImmutable;
 use ReflectionClass;
-use RuntimeException;
 use Symfony\Component\Uid\Uuid;
 
 /**
@@ -30,7 +31,7 @@ class ActivityRecordBuilder
      * @var \DateTimeImmutable Datetime when the activity happened.
      */
     #[DocumentField]
-    protected DateTimeImmutable $date;
+    protected DateTimeImmutable $dateTime;
 
     /**
      * @var int Identifier of the user who generates the activity.
@@ -80,14 +81,14 @@ class ActivityRecordBuilder
         return $this;
     }
 
-    public function getDate() : DateTimeImmutable
+    public function getDateTime() : DateTimeImmutable
     {
-        return $this->date;
+        return $this->dateTime;
     }
 
-    public function setDate(DateTimeImmutable $date) : ActivityRecordBuilder
+    public function setDateTime(DateTimeImmutable $dateTime) : ActivityRecordBuilder
     {
-        $this->date = $date;
+        $this->dateTime = $dateTime;
 
         return $this;
     }
