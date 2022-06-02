@@ -22,7 +22,6 @@ class ActivityRecordBuilderTest extends TestCase
         $dateTime = new DateTimeImmutable();
 
         $record = $builder
-            ->setAction('Page created')
             ->setDescription('New page has been created.')
             ->setDateTime($dateTime)
             ->setUserId(1)
@@ -35,7 +34,6 @@ class ActivityRecordBuilderTest extends TestCase
 
         $document = $record->getDocument();
 
-        $this->assertEquals('Page created', $document['action']);
         $this->assertEquals('New page has been created.', $document['description']);
         $this->assertEquals($dateTime, $document['dateTime']);
         $this->assertEquals(1, $document['userId']);

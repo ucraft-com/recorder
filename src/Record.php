@@ -14,21 +14,16 @@ class Record implements JsonSerializable
     /**
      * Initialize properties.
      *
-     * @param string $index                 Name of the Elasticsearch index where records should be accumulated.
-     * @param array  $document              Document that should contain the main information and stored in the
-     *                                      Elasticsearch.
-     * @param string $action                Action that should be applied to the document through the Elasticsearch.
-     * @param array  $params                In some cases actions can hold parameters. The parameters should be passed
-     *                                      here.
+     * @param string $index    Name of the Elasticsearch index where records should be accumulated.
+     * @param array  $document Document that should contain the main information and stored in the Elasticsearch.
+     * @param array  $params   In some cases actions can hold parameters. The parameters should be passed here.
      */
     public function __construct(
         protected string $index,
         protected array  $document,
-        protected string $action = Action::CREATE,
         protected array  $params = [],
     )
     {
-        Action::assert($this->action);
     }
 
     public function getIndex() : string
@@ -39,11 +34,6 @@ class Record implements JsonSerializable
     public function getDocument() : array
     {
         return $this->document;
-    }
-
-    public function getAction() : string
-    {
-        return $this->action;
     }
 
     public function getParams() : array
@@ -64,7 +54,6 @@ class Record implements JsonSerializable
         return [
             'index'    => $this->getIndex(),
             'document' => $this->getDocument(),
-            'action'   => $this->getAction(),
             'params'   => $this->getParams(),
         ];
     }
