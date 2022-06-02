@@ -22,6 +22,7 @@ class ActivityRecordBuilderTest extends TestCase
         $dateTime = new DateTimeImmutable();
 
         $record = $builder
+            ->setAction('Page created')
             ->setDescription('New page has been created.')
             ->setDateTime($dateTime)
             ->setUserId(1)

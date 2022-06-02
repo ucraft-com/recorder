@@ -16,6 +16,12 @@ use Symfony\Component\Uid\Uuid;
 class ActivityRecordBuilder
 {
     /**
+     * @var string Action of the activity.
+     */
+    #[DocumentField]
+    protected string $action;
+
+    /**
      * @var string Description of the Activity.
      */
     #[DocumentField]
@@ -50,6 +56,18 @@ class ActivityRecordBuilder
      */
     #[DocumentField]
     protected UserAgent $userAgent;
+
+    public function getAction() : string
+    {
+        return $this->action;
+    }
+
+    public function setAction(string $action) : ActivityRecordBuilder
+    {
+        $this->action = $action;
+
+        return $this;
+    }
 
     public function getDescription() : string
     {
