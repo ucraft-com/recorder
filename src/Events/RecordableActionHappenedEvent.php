@@ -5,7 +5,8 @@ declare(strict_types = 1);
 namespace Uc\Recorder\Events;
 
 use Illuminate\Foundation\Events\Dispatchable;
-use Junges\Kafka\Message\Message;
+use Uc\KafkaProducer\Message;
+use Uc\KafkaProducer\MessageBuilder;
 use Uc\Recorder\Record;
 
 use function config;
@@ -36,7 +37,7 @@ class RecordableActionHappenedEvent
     /**
      * Get a new instance of Kafka message based on the initialized key and records.
      *
-     * @return \Junges\Kafka\Message\Message
+     * @return \Uc\KafkaProducer\Message
      */
     public function getKafkaMessage() : Message
     {
@@ -49,14 +50,16 @@ class RecordableActionHappenedEvent
      * @param string              $key
      * @param \Uc\Recorder\Record ...$records
      *
-     * @return \Junges\Kafka\Message\Message
+     * @return \Uc\KafkaProducer\Message
      */
     protected function createKafkaMessage(string $key, Record ...$records) : Message
     {
-        $message = Message::create(config('recorder.sink_topic'));
+        $builder = new MessageBuilder();
 
-        return $message
-            ->withKey($key)
-            ->withBody($records);
+        return $builder
+            ->setTopicName(config('recorder.sink_topic'))
+            ->setKey($key)
+            ->setBody($records)
+            ->getMessage();
     }
 }
