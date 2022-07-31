@@ -17,17 +17,4 @@ class ActivityRecord extends Record
     {
         parent::__construct(config('recorder.activity_index'), $document);
     }
-
-    public function jsonSerialize() : array
-    {
-        $serialized = parent::jsonSerialize();
-
-        if (isset($serialized['document']['dateTime'])) {
-            /** @var \DateTimeImmutable $dateTime */
-            $dateTime = $serialized['document']['dateTime'];
-            $serialized['document']['dateTime'] = $dateTime->format('Y-m-d H:i:s');
-        }
-
-        return $serialized;
-    }
 }

@@ -4,12 +4,10 @@ declare(strict_types = 1);
 
 namespace Uc\Recorder;
 
-use JsonSerializable;
-
 /**
  * Value object for representing some action that has been already happened and should be persisted somehow.
  */
-class Record implements JsonSerializable
+class Record
 {
     /**
      * Initialize properties.
@@ -39,22 +37,5 @@ class Record implements JsonSerializable
     public function getParams() : array
     {
         return $this->params;
-    }
-
-    /**
-     * Specify data which should be serialized to JSON
-     *
-     * @link  https://php.net/manual/en/jsonserializable.jsonserialize.php
-     * @return array data which can be serialized by <b>json_encode</b>,
-     * which is a value of any type other than a resource.
-     * @since 5.4
-     */
-    public function jsonSerialize() : array
-    {
-        return [
-            'index'    => $this->getIndex(),
-            'document' => $this->getDocument(),
-            'params'   => $this->getParams(),
-        ];
     }
 }

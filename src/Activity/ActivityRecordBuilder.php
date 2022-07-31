@@ -28,6 +28,12 @@ class ActivityRecordBuilder
     protected string $description;
 
     /**
+     * @var array|null Payload of the Activity. Can be empty.
+     */
+    #[DocumentField]
+    protected array|null $payload = null;
+
+    /**
      * @var \DateTimeImmutable Datetime when the activity happened.
      */
     #[DocumentField]
@@ -77,6 +83,18 @@ class ActivityRecordBuilder
     public function setDescription(string $description) : ActivityRecordBuilder
     {
         $this->description = $description;
+
+        return $this;
+    }
+
+    public function getPayload() : array|null
+    {
+        return $this->payload;
+    }
+
+    public function setPayload(array|null $payload) : ActivityRecordBuilder
+    {
+        $this->payload = $payload;
 
         return $this;
     }
