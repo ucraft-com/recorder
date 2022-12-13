@@ -12,21 +12,13 @@ class Record
     /**
      * Initialize properties.
      *
-     * @param string $index    Name of the Elasticsearch index where records should be accumulated.
-     * @param array  $document Document that should contain the main information and stored in the Elasticsearch.
-     * @param array  $params   In some cases actions can hold parameters. The parameters should be passed here.
+     * @param array $document   Document that should contain the main information and stored in the Elasticsearch.
+     * @param array $transports Transports which should send corresponding data on the consumer end.
      */
     public function __construct(
-        protected string $index,
-        protected array  $document,
-        protected array  $params = [],
-    )
-    {
-    }
-
-    public function getIndex() : string
-    {
-        return $this->index;
+        protected array $document,
+        protected array $transports
+    ) {
     }
 
     public function getDocument() : array
@@ -34,8 +26,8 @@ class Record
         return $this->document;
     }
 
-    public function getParams() : array
+    public function getTransports() : array
     {
-        return $this->params;
+        return $this->transports;
     }
 }
