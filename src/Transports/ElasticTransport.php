@@ -11,7 +11,7 @@ class ElasticTransport implements RecordDeliveryTransportInterface
     /**
      * @var string
      */
-    private string $identifier = 'elastic';
+    protected string $identifier = 'elastic';
 
     /**
      * @var array
