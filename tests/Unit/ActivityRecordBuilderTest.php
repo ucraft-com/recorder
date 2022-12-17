@@ -11,6 +11,7 @@ use Uc\Recorder\Activity\ActivityRecordBuilder;
 use Uc\Recorder\Activity\GeographicInfo;
 use Uc\Recorder\Activity\UserAgent;
 use Uc\Recorder\Tests\TestCase;
+use Uc\Recorder\Transports\ElasticTransport;
 
 class ActivityRecordBuilderTest extends TestCase
 {
@@ -30,6 +31,7 @@ class ActivityRecordBuilderTest extends TestCase
             ->setProjectId(2)
             ->setGeographicInfo($geographicInfo)
             ->setUserAgent($userAgent)
+            ->addTransport(new ElasticTransport())
             ->getActivityRecord();
 
         $this->assertInstanceOf(ActivityRecord::class, $record);
