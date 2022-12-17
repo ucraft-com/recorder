@@ -7,15 +7,14 @@ namespace Uc\Recorder;
 /**
  * Interface of the record delivery transports.
  *
- * Each transport must have identifier for further corresponding handling of record.
+ * Each transport must have a unique identifier for further handling of records.
  */
 interface RecordDeliveryTransportInterface
 {
     /**
-     * Returns identifier of delivery transport.
+     * Return identifier of delivery transport.
      *
-     * Identifier will be used on the consumer end to determine which transport
-     * should handle record.
+     * Identifier will be used on the consumer end to determine which transport should handle the record.
      *
      * @return string
      */

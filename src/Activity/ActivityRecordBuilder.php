@@ -6,6 +6,7 @@ namespace Uc\Recorder\Activity;
 
 use DateTimeImmutable;
 use ReflectionClass;
+use RuntimeException;
 use Symfony\Component\Uid\Uuid;
 use Uc\Recorder\RecordDeliveryTransportInterface;
 
@@ -65,7 +66,7 @@ class ActivityRecordBuilder
     protected UserAgent $userAgent;
 
     /**
-     * @var array Transports which should send data on the consumer end to handle record.
+     * @var array List of the transports that should send data on the consumer end to handle the record.
      */
     protected array $transports;
 
@@ -217,7 +218,7 @@ class ActivityRecordBuilder
         $transports = $this->getTransports();
 
         if (empty($transports)) {
-            throw new \RuntimeException('Impossible to create a record without transports.');
+            throw new RuntimeException('Impossible to create a record without transports.');
         }
 
         return new ActivityRecord($document, $transports);
