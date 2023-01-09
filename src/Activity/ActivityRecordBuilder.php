@@ -182,14 +182,7 @@ class ActivityRecordBuilder
 
     public function addTransport(RecordDeliveryTransportInterface $transport) : ActivityRecordBuilder
     {
-        $this->transports[$transport->getIdentifier()] = $transport;
-
-        return $this;
-    }
-
-    public function removeTransport(RecordDeliveryTransportInterface $transport) : ActivityRecordBuilder
-    {
-        unset($this->transports[$transport->getIdentifier()]);
+        $this->transports[] = $transport;
 
         return $this;
     }
