@@ -10,6 +10,8 @@ use RuntimeException;
 use Symfony\Component\Uid\Uuid;
 use Uc\Recorder\RecordDeliveryTransportInterface;
 
+use function array_values;
+
 /**
  * Builder class for creating ActivityRecord objects.
  *
@@ -182,7 +184,14 @@ class ActivityRecordBuilder
 
     public function addTransport(RecordDeliveryTransportInterface $transport) : ActivityRecordBuilder
     {
-        $this->transports[] = $transport;
+        $this->transports[$transport->getIdentifier()] = $transport;
+
+        return $this;
+    }
+
+    public function removeTransport(RecordDeliveryTransportInterface $transport) : ActivityRecordBuilder
+    {
+        unset($this->transports[$transport->getIdentifier()]);
 
         return $this;
     }
@@ -214,6 +223,6 @@ class ActivityRecordBuilder
             throw new RuntimeException('Impossible to create a record without transports.');
         }
 
-        return new ActivityRecord($document, $transports);
+        return new ActivityRecord($document, array_values($transports));
     }
 }
