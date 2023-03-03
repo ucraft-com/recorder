@@ -29,11 +29,11 @@
     "require": {
         "php": ">=8.0",
         "ucraft-com/kafka-producer": "^1.0.6",
-        "symfony/uid": "6.0.x-dev"
+        "symfony/uid": "^6.2"
     },
     "require-dev": {
         "orchestra/testbench": "^7.5.0",
-        "phpunit/phpunit": "^9.5.10"
+        "phpunit/phpunit": "^10.0"
     },
     "extra": {
         "laravel": {
