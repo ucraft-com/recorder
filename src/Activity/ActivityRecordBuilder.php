@@ -44,10 +44,10 @@ class ActivityRecordBuilder
     protected DateTimeImmutable $dateTime;
 
     /**
-     * @var int Identifier of the user who generates the activity.
+     * @var array User who generates the activity.
      */
     #[DocumentField]
-    protected int $userId;
+    protected array $user;
 
     /**
      * @var int Identifier of the project where the record was created.
@@ -120,14 +120,14 @@ class ActivityRecordBuilder
         return $this;
     }
 
-    public function getUserId() : int
+    public function getUser() : array
     {
-        return $this->userId;
+        return $this->user;
     }
 
-    public function setUserId(int $userId) : ActivityRecordBuilder
+    public function setUser(array $user) : ActivityRecordBuilder
     {
-        $this->userId = $userId;
+        $this->user = $user;
 
         return $this;
     }
